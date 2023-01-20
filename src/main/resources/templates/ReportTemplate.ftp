@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style></style>
+    <title>Transaction Detail for ${user}</title>
+</head>
+<body>
+    <img src = "${imgSrc}" height="50" width="50"></img>
+    <br/>
+    <br/>
+    <h2>Transaction History</h2>
+    <p>Hi ${user} your Current Balance is <span style="font-family: DejaVu Sans;">&#8377;</span>${balance} and your transaction history is listed in the table below</p>
+    <table>
+        <tr>
+            <th>Account Credited</th>
+            <th>Account Debited</th>
+            <th>Amount</th>
+            <th>Transaction Type</th>
+        </tr>
+        <#list transactions as transaction>
+            <tr>
+                <#if transaction.transactionType == "Credit">
+                    <td>${account}</td>
+                    <td>${transaction.acc}</td>
+                </#if>
+                <#if transaction.transactionType == "Debit">
+                <td>${transaction.acc}</td>
+                <td>${account}</td>
+                </#if>
+                <td><span style="font-family: DejaVu Sans;">&#8377;</span>${transaction.amount}</td>
+                <td>${transaction.transactionType}</td>
+            </tr>
+        </#list>
+    </table>
+</body>
+</html>
