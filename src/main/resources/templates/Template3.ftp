@@ -191,7 +191,7 @@ div.logo-container {
             <header>
                 <div class="row">
                     <div class="logo-container">
-                            <img src="${imgSrc}" alt="Business Logo" />
+                        <img src="file:///Users/ankitjha/Desktop/Repos/report-generator/src/main/resources/image/Rupee.jpg" alt="Business Logo" />
                     </div>
                     <div class="col company-details">
                         <h2 class="name">
@@ -216,7 +216,7 @@ div.logo-container {
                     </div>
                     <div class="col invoice-details">
                         <h1 class="invoice-id">Transaction History for ${user}</h1>
-                        <div class="date">Total Balance: <span style="font-family: DejaVu Sans;">Rs</span>${balance}</div>
+                        <div class="date">Total Balance: <span style="font-family: DejaVu Sans;">&#8377;</span>${balance}</div>
                     </div>
                 </div>
                 <table border="0" cellspacing="0" cellpadding="0">
@@ -233,12 +233,12 @@ div.logo-container {
                                 <#if transaction.transactionType == "Credit">
                                     <td class="text-left">${transaction.acc}</td>
                                     <td class="text-left">${account}</td>
-                                    <td class="totalCredit"><span style="font-family: DejaVu Sans;">Rs</span>${transaction.amount}</td>
+                                    <td class="totalCredit"><span style="font-family: DejaVu Sans;">&#8377;</span>${transaction.amount}</td>
                                 </#if>
                                 <#if transaction.transactionType == "Debit">
                                     <td class="text-left"> ${account}</td>
                                     <td class="text-left">${transaction.acc}</td>
-                                    <td class="totalDebit"><span style="font-family: DejaVu Sans;">Rs</span>${transaction.amount}</td>
+                                    <td class="totalDebit"><span style="font-family: DejaVu Sans;">&#8377;</span>${transaction.amount}</td>
                                 </#if>
                             </tr>
                         </#list>

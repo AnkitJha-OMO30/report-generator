@@ -1,0 +1,263 @@
+<html>
+<head>
+<title>This is a Wonderful place ${holaa!"Yess"}</title>
+<style>
+@page {
+    @top-right {
+        content: "Page " counter(page) " of " counter(pages);
+        font-family: sans-serif;
+        padding-right: 15px;
+    }
+}
+
+#invoice{
+    padding: 0px;
+}
+
+.invoice {
+    position: relative;
+    padding: 15px
+}
+
+.invoice header {
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #3989c6
+}
+
+.invoice .company-details {
+    text-align: right
+}
+
+.invoice .company-details .name {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+.invoice .contacts {
+    margin-bottom: 20px
+}
+
+.invoice .invoice-to {
+    text-align: left
+}
+
+.invoice .invoice-to .to {
+    margin-top: 0;
+    margin-bottom: 0
+}
+
+.invoice .invoice-details {
+    text-align: right
+}
+
+.invoice .invoice-details .invoice-id {
+    margin-top: 0;
+    color: #3989c6
+}
+
+.invoice main {
+    padding-bottom: 50px
+}
+
+.invoice main .thanks {
+    margin-top: -100px;
+    font-size: 2em;
+    margin-bottom: 50px
+}
+
+.invoice main .notices {
+    padding-left: 6px;
+    border-left: 6px solid #3989c6
+}
+
+.invoice main .notices .notice {
+    font-size: 1.2em
+}
+
+.invoice table {
+    width: 100%;
+    border-collapse: collapse;
+    border-spacing: 0;
+    margin-bottom: 20px
+}
+
+.invoice table td,.invoice table th {
+    padding: 15px;
+    background: #eee;
+    border-bottom: 1px solid #fff
+}
+
+.invoice table th {
+    white-space: nowrap;
+    font-weight: 400;
+    font-size: 16px
+}
+
+.invoice table td h3 {
+    margin: 0;
+    font-weight: 400;
+    color: #3989c6;
+    font-size: 1.2em
+}
+
+.invoice table .qty,.invoice table .total,.invoice table .unit .totalCredit .totalDebit{
+    text-align: right;
+    font-size: 1.2em
+}
+
+.invoice table .no {
+    color: #fff;
+    font-size: 1.6em;
+    background: #3989c6
+}
+
+.invoice table .unit {
+    background: #ddd
+}
+
+.invoice table .total {
+    background: #3989c6;
+    color: #fff
+}
+
+.invoice table .totalCredit{
+    background: #77DD77;
+        color: #000
+}
+
+.invoice table .totalDebit{
+    background: #FF7276;
+            color: #fff
+}
+
+.invoice table tbody tr:last-child td {
+    border: none
+}
+
+.invoice table tfoot td {
+    background: 0 0;
+    border-bottom: none;
+    white-space: nowrap;
+    text-align: right;
+    padding: 10px 20px;
+    font-size: 1.2em;
+    border-top: 1px solid #aaa
+}
+
+.invoice table tfoot tr:first-child td {
+    border-top: none
+}
+
+.invoice table tfoot tr:last-child td {
+    color: #3989c6;
+    font-size: 1.4em;
+    border-top: 1px solid #3989c6
+}
+
+.invoice table tfoot tr td:first-child {
+    border: none
+}
+
+.invoice footer {
+    width: 100%;
+    text-align: center;
+    color: #777;
+    border-top: 1px solid #aaa;
+    padding: 8px 0
+}
+.invoice {
+    font-size: 14px;
+    line-height: 1.4;
+    font-family: sans-serif;
+}
+a.logo {
+    display: inline-block;
+    text-decoration: none;
+}
+tr, tfoot {
+    page-break-inside: avoid;
+}
+div.logo-container {
+    float: left;
+}
+</style>
+</head>
+<body>
+
+<!--Author      : @arboshiki-->
+<div id="invoice">
+    <div class="invoice">
+        <div>
+            <header>
+                <div class="row">
+                    <div class="logo-container">
+                            <img src="${imgSrc}" alt="Business Logo" />
+                    </div>
+                    <div class="col company-details">
+                        <h2 class="name">
+                            AJ Banks
+                        </h2>
+                        <div>
+                          Street 007, Bond Road, BLR, India
+                        </div>
+                        <div class="email">manager@ajBanks.com</div>
+                    </div>
+                </div>
+                <div style="clear: both;"></div>
+            </header>
+            <main>
+                <div class="row contacts">
+                    <div class="col invoice-to">
+                        <div class="text-gray-light">INVOICE TO:</div>
+                        <h2 class="to" >${user}</h2>
+                        <div class="address">
+                            Flat 1, Building 2, Road3, City4, Country5 - 123456
+                        </div>
+                    </div>
+                    <div class="col invoice-details">
+                        <h1 class="invoice-id">Transaction History for ${user}</h1>
+                        <div class="date">Total Balance: <span style="font-family: DejaVu Sans;">Rs</span>${balance}</div>
+                    </div>
+                </div>
+                <table border="0" cellspacing="0" cellpadding="0">
+                    <thead>
+                        <tr>
+                            <th class="text-left">Account From</th>
+                            <th class="text-right">Account To</th>
+                            <th class="total">AMOUNT</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <#list transactions as transaction>
+                            <tr>
+                                <#if transaction.transactionType == "Credit">
+                                    <td class="text-left">${transaction.acc}</td>
+                                    <td class="text-left">${account}</td>
+                                    <td class="totalCredit"><span style="font-family: DejaVu Sans;">Rs</span>${transaction.amount}</td>
+                                </#if>
+                                <#if transaction.transactionType == "Debit">
+                                    <td class="text-left"> ${account}</td>
+                                    <td class="text-left">${transaction.acc}</td>
+                                    <td class="totalDebit"><span style="font-family: DejaVu Sans;">Rs</span>${transaction.amount}</td>
+                                </#if>
+                            </tr>
+                        </#list>
+                    </tbody>
+                </table>
+                <br/>
+                <br/>
+                <h3>Thank you!</h3>
+                <div class="notices">
+                    <div>NOTICE:</div>
+                    <div class="notice">This is a demo Transaction History Table</div>
+                </div>
+            </main>
+            <footer>
+                Invoice was created on a computer and is valid without the signature and seal.
+            </footer>
+        </div>
+    </div>
+</div>
+</body>
+</html>

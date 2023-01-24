@@ -26,14 +26,17 @@ public class HTMLReportGenerator implements Generator {
         Path customPath = Path.of("/Users/ankitjha/Desktop/Repos/report-generator/src/main/resources/image/Rupee.jpg");
         json.put("imgSrc",customPath.toUri());
         //System.out.println("Fetching the template");
-        //Template freemarkerTemplate = cfg.getTemplate("ReportTemplate.ftp");
-        Template freemarkerTemplate = cfg.getTemplate("DecoratedReportTemplate.ftp");
+        //Template freemarkerTemplate = cfg.getTemplate("2.ftp");
+        String template = "1.ftp";
+        if(json.containsKey("template"))
+            template = (String)json.get("template");
+        Template freemarkerTemplate = cfg.getTemplate(template);
         File tempFile = File.createTempFile("tempHTML",".html");
         Writer out = new FileWriter(tempFile);
         freemarkerTemplate.process(json,out);
         /*Writer out = new OutputStreamWriter(System.out);
         freemarkerTemplate.process(json, out);*/
-        String fileContent = "No Content Currently";
+        String fileContent;
         fileContent = Files.readString(Path.of(tempFile.getPath()));
         Files.delete(Path.of(tempFile.getPath()));
         out.close();
