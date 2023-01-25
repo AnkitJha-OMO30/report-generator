@@ -6,11 +6,7 @@ import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
-import java.nio.file.Files;
+import java.io.*;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -20,26 +16,25 @@ public class HTMLReportGenerator implements Generator {
 
     @Override
     public Object getReport(Map<String,Object> json) throws IOException, TemplateException {
-        if( cfg == null ) {
-            cfg = ReportGeneratorConfiguration.getTemplateConfiguration();
-        }
-        Path customPath = Path.of("/Users/ankitjha/Desktop/Repos/report-generator/src/main/resources/image/Rupee.jpg");
+        cfg = getConfiguration();
+
+        Path customPath = Path.of("src/main/resources/image/Rupee.jpg");
         json.put("imgSrc",customPath.toUri());
-        //System.out.println("Fetching the template");
-        //Template freemarkerTemplate = cfg.getTemplate("2.ftp");
+
         String template = "1.ftp";
         if(json.containsKey("template"))
             template = (String)json.get("template");
+
         Template freemarkerTemplate = cfg.getTemplate(template);
-        File tempFile = File.createTempFile("tempHTML",".html");
-        Writer out = new FileWriter(tempFile);
-        freemarkerTemplate.process(json,out);
-        /*Writer out = new OutputStreamWriter(System.out);
-        freemarkerTemplate.process(json, out);*/
-        String fileContent;
-        fileContent = Files.readString(Path.of(tempFile.getPath()));
-        Files.delete(Path.of(tempFile.getPath()));
-        out.close();
-        return fileContent;
+        Writer htmlOut = new StringWriter();
+        freemarkerTemplate.process(json,htmlOut);
+        String htmlContent = htmlOut.toString();
+        htmlOut.close();
+        return htmlContent;
+
+    }
+
+    public static Configuration getConfiguration() throws IOException {
+        return ReportGeneratorConfiguration.getTemplateConfiguration();
     }
 }

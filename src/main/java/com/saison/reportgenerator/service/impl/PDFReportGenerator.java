@@ -8,7 +8,6 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 
 import java.io.*;
-import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Map;
 
@@ -18,26 +17,19 @@ public class PDFReportGenerator implements Generator {
 
     @Override
     public Object getReport(Map<String, Object> json) throws IOException, TemplateException {
-        cfg = ReportGeneratorConfiguration.getTemplateConfiguration();
-        Path customPath = Path.of("/Users/ankitjha/Desktop/Repos/report-generator/src/main/resources/image/Rupee.jpg");
+        cfg = getConfiguration();
+
+        Path customPath = Path.of("src/main/resources/image/Rupee.jpg");
         json.put("imgSrc",customPath.toUri());
-        //System.out.println("Fetching the template");
-        //Template freemarkerTemplate = cfg.getTemplate("2.ftp");
 
         String template = "1.ftp";
         if(json.containsKey("template"))
             template = (String)json.get("template");
 
-        Template freemarkerTemplate = cfg.getTemplate(template);
-        File tempFile = File.createTempFile("tempHTML",".html");
-        Writer out = new FileWriter(tempFile);
-        freemarkerTemplate.process(json,out);
-        String fileContent;
-        fileContent = Files.readString(Path.of(tempFile.getPath()));
-        Files.delete(Path.of(tempFile.getPath()));
-        out.close();
+        String fileContent = getHtmlPage(cfg, template, json);
+
         File directory = new File("/Users/ankitjha/Desktop/Reports");
-        File pdfFile = File.createTempFile("Report",".pdf",directory);
+        File pdfFile = File.createTempFile("TransactionReport",".pdf",directory);
         OutputStream oStream = new FileOutputStream(pdfFile);
         PdfRendererBuilder builder = new PdfRendererBuilder();
         builder.useFastMode()
@@ -46,8 +38,19 @@ public class PDFReportGenerator implements Generator {
                 .run();
         oStream.close();
         return pdfFile.getPath();
+    }
 
+    public static Configuration getConfiguration() throws IOException {
+        return ReportGeneratorConfiguration.getTemplateConfiguration();
+    }
 
-
+    public static String getHtmlPage(Configuration cfg, String templatePath, Map<String,Object> json) throws IOException,
+            TemplateException {
+        Template freemarkerTemplate = cfg.getTemplate(templatePath);
+        Writer htmlOut = new StringWriter();
+        freemarkerTemplate.process(json,htmlOut);
+        String fileContent = htmlOut.toString();
+        htmlOut.close();
+        return fileContent;
     }
 }

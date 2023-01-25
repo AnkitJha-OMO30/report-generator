@@ -220,7 +220,7 @@ div.logo-container {
                         <div class="date">Total Balance: <span style="font-family: DejaVu Sans;">Rs</span>${balance}</div>
                     </div>
                 </div>
-                <table border="0" cellspacing="0" cellpadding="0">
+                <table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed;">
                     <thead>
                         <tr>
                             <th class="text-left">Account From</th>
@@ -232,19 +232,43 @@ div.logo-container {
                         <#list transactions as transaction>
                             <tr>
                                 <#if transaction.transactionType == "Credit">
-                                    <td class="text-left">${transaction.acc}</td>
-                                    <td class="text-left">${account}</td>
-                                    <td class="totalCredit"><span style="font-family: DejaVu Sans;">Rs</span>${transaction.amount}</td>
+                                    <td class="text-left" style=" word-wrap:break-word">${transaction.acc}</td>
+                                    <td class="text-left" style=" word-wrap:break-word">${account}</td>
+                                    <td class="totalCredit" style=" word-wrap:break-word">Rs${transaction.amount}</td>
                                 </#if>
                                 <#if transaction.transactionType == "Debit">
-                                    <td class="text-left"> ${account}</td>
-                                    <td class="text-left">${transaction.acc}</td>
-                                    <td class="totalDebit"><span style="font-family: DejaVu Sans;">Rs</span>${transaction.amount}</td>
+                                    <td class="text-left" style=" word-wrap:break-word"> ${account}</td>
+                                    <td class="text-left" style=" word-wrap:break-word">${transaction.acc}</td>
+                                    <td class="totalDebit" style=" word-wrap:break-word">Rs${transaction.amount}</td>
                                 </#if>
                             </tr>
                         </#list>
                     </tbody>
                 </table>
+                <br/>
+                <h2>Loans Ongoing</h2>
+                <#if loans??>
+                <table border="0" cellspacing="0" cellpadding="0" style="table-layout:fixed">
+                    <thead>
+                        <tr>
+                            <th class="text-left" style=" word-wrap:break-word">Lenders</th>
+                            <th class="text-right" style=" word-wrap:break-word">Loan Duration</th>
+                            <th class="total" style=" word-wrap:break-word">Loan Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <#list loans as loan>
+                            <tr>
+                                <td class="text-left"> ${loan.lender}</td>
+                                <td class="text-left">${loan.duration}</td>
+                                <td class="total" style="">Rs ${loan.amount}</td>
+                            </tr>
+                        </#list>
+                    </tbody>
+                </table>
+                <#else>
+                <h4> No Loan Info Found</h4>
+                </#if>
                 <br/>
                 <br/>
                 <h3>Thank you!</h3>
