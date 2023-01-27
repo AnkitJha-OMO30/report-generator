@@ -1,6 +1,7 @@
 package com.saison.reportgenerator.service.impl;
 
 import com.openhtmltopdf.pdfboxout.PdfRendererBuilder;
+import com.openhtmltopdf.svgsupport.BatikSVGDrawer;
 import com.saison.reportgenerator.ReportGeneratorConfiguration;
 import com.saison.reportgenerator.service.Generator;
 import freemarker.template.Configuration;
@@ -45,6 +46,7 @@ public class PDFReportGenerator implements Generator {
         builder.useFastMode()
                 .withHtmlContent(fileContent,null)
                 .toStream(oStream)
+                .useSVGDrawer(new BatikSVGDrawer())
                 .run();
         oStream.close();
         return pdfFile.getPath();

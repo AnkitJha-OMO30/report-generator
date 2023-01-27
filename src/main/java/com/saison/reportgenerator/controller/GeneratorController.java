@@ -2,6 +2,7 @@ package com.saison.reportgenerator.controller;
 
 
 import com.saison.reportgenerator.service.Generator;
+import com.saison.reportgenerator.service.impl.CSVReportGenerator;
 import com.saison.reportgenerator.service.impl.HTMLReportGenerator;
 import com.saison.reportgenerator.service.impl.PDFReportGenerator;
 import com.saison.reportgenerator.service.impl.PDFReportGeneratorRaptor;
@@ -29,10 +30,16 @@ public class GeneratorController {
         return (String) generator.getReport(json);
     }
 
-    @PostMapping("/getPDFByRaptor")
+    @PostMapping("/getCSV")
+    public String getCSV(@RequestBody Map<String,Object> json) throws TemplateException, IOException {
+        generator = new CSVReportGenerator();
+        return (String) generator.getReport(json);
+    }
+
+    /*@PostMapping("/getPDFByRaptor")
     public @ResponseBody String getPDFByRaptor(@RequestBody Map<String,Object> json) throws TemplateException, IOException {
         generator = new PDFReportGeneratorRaptor();
         return (String) generator.getReport(json);
-    }
+    }*/
 
 }
