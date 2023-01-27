@@ -9,6 +9,7 @@ To test the API, you can utilise the JSON in the following format
 "user":"User123",
 "account":"3323472929",
 "balance": 12345,
+"pdfName":"<PDF Name for your File>"
 "template":"1.ftp",
 "transactions": [
         {

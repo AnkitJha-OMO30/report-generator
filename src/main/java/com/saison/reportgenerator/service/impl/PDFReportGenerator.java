@@ -29,7 +29,17 @@ public class PDFReportGenerator implements Generator {
         String fileContent = getHtmlPage(cfg, template, json);
 
         File directory = new File("/Users/ankitjha/Desktop/Reports");
-        File pdfFile = File.createTempFile("TransactionReport",".pdf",directory);
+        String fileName = "TransactionReport";
+        if(json.containsKey("pdfName"))
+        {
+            if(json.get("pdfName").getClass() == String.class) {
+                fileName = (String)json.get("pdfName");
+            }
+        }
+        if(fileName.length()<3) {
+            fileName = "TransactionReport";
+        }
+        File pdfFile = File.createTempFile(fileName,".pdf",directory);
         OutputStream oStream = new FileOutputStream(pdfFile);
         PdfRendererBuilder builder = new PdfRendererBuilder();
         builder.useFastMode()
