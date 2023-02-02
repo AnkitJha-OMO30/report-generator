@@ -7,6 +7,8 @@ import com.saison.reportgenerator.service.Generator;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.*;
 import java.nio.file.Path;
@@ -16,9 +18,26 @@ public class PDFReportGenerator implements Generator {
 
     Configuration cfg;
 
+    public HttpClientErrorException validateJSON(Map<String,Object> json)
+    {
+        if(!json.containsKey("userId")) {
+            return new HttpClientErrorException(HttpStatus.BAD_REQUEST,"JSON is missing userId Field");
+        }
+        if(!json.containsKey("transactions")) {
+            return new HttpClientErrorException(HttpStatus.BAD_REQUEST,"JSON is missing transactions fields");
+        }
+        return null;
+    }
+
     @Override
     public Object getReport(Map<String, Object> json) throws IOException, TemplateException {
         cfg = getConfiguration();
+
+        HttpClientErrorException exception = validateJSON(json);
+        if(exception!=null)
+        {
+            return exception;
+        }
 
         Path customPath = Path.of("src/main/resources/image/Rupee.jpg");
         json.put("imgSrc",customPath.toUri());

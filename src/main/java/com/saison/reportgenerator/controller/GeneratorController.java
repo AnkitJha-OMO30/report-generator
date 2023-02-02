@@ -10,7 +10,10 @@ import com.saison.reportgenerator.service.impl.HTMLReportGenerator;
 import com.saison.reportgenerator.service.impl.PDFReportGenerator;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
 
 import java.io.*;
 import java.util.Map;
@@ -31,11 +34,16 @@ public class GeneratorController {
     }
 
     @PostMapping("/getPDF")
-    public @ResponseBody String getPDF(@RequestBody Map<String,Object> json) throws IOException, TemplateException {
+    public @ResponseBody ResponseEntity<String> getPDF(@RequestBody Map<String,Object> json) throws IOException, TemplateException {
         generator = new PDFReportGenerator();
-        String url = (String) generator.getReport(json);
+        Object getPDFUrl = generator.getReport(json);
+        if(getPDFUrl.getClass() == HttpClientErrorException.class) {
+            HttpClientErrorException exception = (HttpClientErrorException) getPDFUrl;
+            return new ResponseEntity<>(exception.getMessage(), exception.getStatusCode());
+        }
+        String url = (String) getPDFUrl;
         ReportLog logsSaved = SaveReportLog.saveLogs(reportLogService, url, json);
-        return logsSaved.getReportUrl();
+        return new ResponseEntity<>(logsSaved.getReportUrl(), HttpStatus.OK);
     }
 
 
