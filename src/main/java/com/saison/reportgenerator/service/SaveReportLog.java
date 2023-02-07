@@ -18,11 +18,7 @@ public class SaveReportLog {
         ReportLog newReportLog = getNewObject();
         newReportLog.setUserId((String) json.get("userId"));
         newReportLog.setReportUrl(urlStored);
-        String template = "1.ftp";
-        if(json.containsKey("template")) {
-            template = (String) json.get("template");
-        }
-        newReportLog.setTemplate(template);
+        newReportLog.setFileType("PDF");
         return service.save(newReportLog);
     }
 

@@ -13,7 +13,7 @@ public class ReportLog {
     private Long recordId;
     private String userId;
     private Date dateStamp;
-    private String template;
+    private String fileType;
     private String reportUrl;
 
     public Long getRecordId() {
@@ -40,12 +40,12 @@ public class ReportLog {
         this.dateStamp = dateStamp;
     }
 
-    public String getTemplate() {
-        return template;
+    public String getFileType() {
+        return fileType;
     }
 
-    public void setTemplate(String template) {
-        this.template = template;
+    public void setFileType(String fileType) {
+        this.fileType = fileType;
     }
 
     public String getReportUrl() {
