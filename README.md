@@ -1,5 +1,7 @@
 # report-generator
-This repository handles the json to PDF generation
+This repository handles various Report Generation
+
+### Json to PDF Report Generation
 
 This Utilises OpenHTMLToPdf and FreeMarker Dependencies to convert JSON data initially to HTML code and then converts the HTML Page to PDF. 
 
@@ -65,4 +67,90 @@ To test the API, you can utilise the JSON in the following format
 Here, Adding loans array can be optional and you need not necessarily add them. 
 To call the report generation, use the /getPDF API, and to get the HTML part, utilise the /getReport API. 
 
-It's still in development, so any feedback is welcome!!
+### JSON To CSV
+
+This Functionality Generates CSV Report after getting data in JSON. It makes use of json-flattener, commons-io and json dependencies.
+
+To Call it, make use of below API
+
+```
+/getCSV
+```
+
+#### Sample JSON to CSV Generation
+
+JSON
+
+```
+[
+    {
+        "field31":"val31",
+        "field32":{
+            "field321":"val321",
+            "field322":"val322",
+            "field323":[
+                {
+                    "field3231":"val3231"
+                }
+            ]
+        },
+        "field33":[
+            {
+                "field331":"val331",
+                "field332":"val332"
+            },
+            {
+                "field331":"val331",
+                "field332":"val332"
+            }
+        ]
+    },
+    {
+        "field31":"uniqueVal31",
+        "field32":{
+            "field321":"val321",
+            "field322":"val322",
+            "field323":[
+                {
+                    "field3231":"val3231"
+                }
+            ]
+        },
+        "field33":[
+            {
+                "field331":"val331",
+                "field332":"val332"
+            },
+            {
+                "field331":"val331",
+                "field332":"val332"
+            }
+        ],
+        "field34":"val34"
+    }
+]
+
+```
+
+CSV Generated
+```
+field33[0].field331,field32.field321,field34,field33[1].field332,field31,field32.field322,field33[1].field331,field32.field323[0].field3231,field33[0].field332
+2val331,val321,,val332,val31,val322,val331,val3231,val332
+3val331,val321,val34,val332,uniqueVal31,val322,val331,val3231,val332
+```
+
+### CSV to JSON 
+
+This functionality Converts CSV File to JSON File. 
+
+To utilise the API, call the below API
+
+```
+/getJsonFromCsv
+```
+
+
+
+
+Above APIs are still in development, so any feedback is welcome!!
+
