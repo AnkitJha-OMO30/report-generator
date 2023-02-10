@@ -83,14 +83,26 @@
 
 		<!-- For CSV Conversion -->
 		<dependency>
+			<!-- Can Be Commented out of Json2Flat works well -->
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
 			<version>2.11.0</version>
 		</dependency>
+
+		<!--<dependency>
+			<groupId>com.github.opendevl</groupId>
+			<artifactId>json2flat</artifactId>
+			<version>1.0.3</version>
+		</dependency>-->
 		<dependency>
 			<groupId>org.json</groupId>
 			<artifactId>json</artifactId>
 			<version>20220924</version>
+		</dependency>
+		<dependency>
+			<groupId>com.github.wnameless.json</groupId>
+			<artifactId>json-flattener</artifactId>
+			<version>0.16.4</version>
 		</dependency>
 
 		<!-- JChart for openHtmlToPdf -->

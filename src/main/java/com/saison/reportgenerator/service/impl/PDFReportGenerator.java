@@ -30,7 +30,8 @@ public class PDFReportGenerator implements Generator {
     }
 
     @Override
-    public Object getReport(Map<String, Object> json) throws IOException, TemplateException {
+    public Object getReport(Object jsonExternal) throws IOException, TemplateException {
+        Map<String,Object> json = (Map<String, Object>) jsonExternal;
         cfg = getConfiguration();
 
         HttpClientErrorException exception = validateJSON(json);

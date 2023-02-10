@@ -1,6 +1,7 @@
-package com.saison.reportgenerator.service;
+package com.saison.reportgenerator.service.impl;
 
 import com.saison.reportgenerator.model.ReportLog;
+import com.saison.reportgenerator.service.ReportLogService;
 
 import java.util.Calendar;
 import java.util.Map;

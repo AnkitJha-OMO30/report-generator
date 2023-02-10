@@ -1,51 +1,78 @@
 package com.saison.reportgenerator.service.impl;
 
+import com.github.wnameless.json.flattener.JsonFlattener;
 import com.saison.reportgenerator.service.Generator;
 import org.apache.commons.io.FileUtils;
+import org.jfree.data.json.impl.JSONValue;
 import org.json.CDL;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Map;
+import java.util.*;
 
 public class CSVReportGenerator implements Generator {
 
-    protected String customCSVHeaderForTransaction(JSONArray jsonArray)
+    public String getStringForCsv(JSONArray arr)
     {
-        JSONObject jo = jsonArray.optJSONObject(0);
-        if (jo != null) {
-            JSONArray names = jo.names();
-            System.out.println();
-            if (names != null) {
-                return "Account Affected,Transaction,Amount(in Rs)\n" + CDL.toString(names, jsonArray);
-            }
+        JSONObject jo = arr.getJSONObject(0);
+        if(jo == null)
+        {
+            return null;
         }
-        return null;
+        Map<String, Integer> headerCount = new HashMap<>();
+        for(int i = 0; i<arr.length();i++)
+        {
+            arr.getJSONObject(i).keySet().stream().forEach(s->headerCount.putIfAbsent(s,1));
+        }
+        //System.out.println(headerCount.keySet());
+        JSONArray names = new JSONArray(headerCount.keySet());
+        if (names == null) {
+            return null;
+        }
+        return CDL.rowToString(names) + CDL.toString(names, arr);
+    }
+
+    public JSONArray flattenJsonArr(Object jsonExternal)
+    {
+        JSONArray arr = new JSONArray((ArrayList)jsonExternal);
+        JSONArray flattenedJsonArr = new JSONArray();
+        for(int i = 0; i<arr.length();i++)
+        {
+            JSONObject obj = arr.getJSONObject(i);
+            String flattenJSON = JsonFlattener.flatten(obj.toString());
+            //System.out.println(flattenJSON);
+            flattenedJsonArr.put(new JSONObject(flattenJSON));
+        }
+
+        return flattenedJsonArr;
     }
 
     @Override
-    public Object getReport(Map<String, Object> json) throws IOException {
+    public Object getReport(Object jsonExternal) throws IOException {
 
         String urlsToReturn = "";
-        JSONObject jsonObject = new JSONObject(json);
+        if(jsonExternal.getClass()== ArrayList.class)
+        {
+            JSONArray flattenedJsonArr = flattenJsonArr(jsonExternal);
+            File csvFile = new File("/Users/ankitjha/Desktop/Reports/"+"CSVTransaction.csv");
 
-        JSONArray customList = jsonObject.getJSONArray("transactions");
-        File csvFile = new File("/Users/ankitjha/Desktop/Reports/"+"CSVTransaction.csv");
-        String csvWrite = customCSVHeaderForTransaction(customList);
-        System.out.println(csvWrite);
-        FileUtils.writeStringToFile(csvFile, csvWrite);
-        urlsToReturn+="URL For Transaction: " + csvFile.getPath() + "\n";
-
-        if(!json.containsKey("loans")) {
-            return urlsToReturn;
+            FileUtils.writeStringToFile(csvFile,getStringForCsv(flattenedJsonArr));
+            return csvFile.getPath();
         }
 
-        customList = jsonObject.getJSONArray("loans");
-        csvFile = new File("/Users/ankitjha/Desktop/Reports/"+"CSVLoans.csv");
-        FileUtils.writeStringToFile(csvFile, CDL.toString(customList));
-        urlsToReturn+="URL For Transaction: " + csvFile.getPath() + "\n";
+
+
+        String jsonString = JSONValue.toJSONString((LinkedHashMap)jsonExternal);
+        String jsonFlatter = JsonFlattener.flatten(jsonString);
+        JSONObject object = new JSONObject(jsonFlatter);
+        File csvFile = new File("/Users/ankitjha/Desktop/Reports/"+"CSVTransaction.csv");
+        JSONArray tempArr = new JSONArray();
+        tempArr.put(object);
+        FileUtils.writeStringToFile(csvFile,getStringForCsv(tempArr));
+
+        urlsToReturn=csvFile.getPath();
 
         return urlsToReturn;
     }

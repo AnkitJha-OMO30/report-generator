@@ -21,7 +21,8 @@ public class PDFReportGeneratorRaptor implements Generator {
 
 
     @Override
-    public Object getReport(Map<String, Object> json) throws IOException, TemplateException {
+    public Object getReport(Object jsonExternal) throws IOException, TemplateException {
+        Map<String,Object> json = (Map<String, Object>) jsonExternal;
         Configuration cfg = getConfiguration();
 
 //        Path customPath = Path.of("/Users/ankitjha/Desktop/Repos/report-generator/src/main/resources/image/Rupee.jpg");

@@ -4,8 +4,9 @@ package com.saison.reportgenerator.controller;
 import com.saison.reportgenerator.model.ReportLog;
 import com.saison.reportgenerator.service.Generator;
 import com.saison.reportgenerator.service.ReportLogService;
-import com.saison.reportgenerator.service.SaveReportLog;
+import com.saison.reportgenerator.service.impl.SaveReportLog;
 import com.saison.reportgenerator.service.impl.CSVReportGenerator;
+import com.saison.reportgenerator.service.impl.CsvToJsonReportGenerator;
 import com.saison.reportgenerator.service.impl.HTMLReportGenerator;
 import com.saison.reportgenerator.service.impl.PDFReportGenerator;
 import freemarker.template.TemplateException;
@@ -49,9 +50,15 @@ public class GeneratorController {
 
 
     @PostMapping("/getCSV")
-    public String getCSV(@RequestBody Map<String,Object> json) throws TemplateException, IOException {
+    public String getCSV(@RequestBody Object json) throws TemplateException, IOException {
         generator = new CSVReportGenerator();
         return (String) generator.getReport(json);
+    }
+
+    @PostMapping("/getJsonFromCsv")
+    public String getJsonFromCsv(@RequestBody String csv) throws TemplateException, IOException {
+        generator = new CsvToJsonReportGenerator();
+        return (String) generator.getReport(csv);
     }
 
     /*@PostMapping("/getUserCharts")
