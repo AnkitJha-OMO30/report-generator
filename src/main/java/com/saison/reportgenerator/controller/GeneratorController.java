@@ -4,11 +4,7 @@ package com.saison.reportgenerator.controller;
 import com.saison.reportgenerator.model.ReportLog;
 import com.saison.reportgenerator.service.Generator;
 import com.saison.reportgenerator.service.ReportLogService;
-import com.saison.reportgenerator.service.impl.SaveReportLog;
-import com.saison.reportgenerator.service.impl.CSVReportGenerator;
-import com.saison.reportgenerator.service.impl.CsvToJsonReportGenerator;
-import com.saison.reportgenerator.service.impl.HTMLReportGenerator;
-import com.saison.reportgenerator.service.impl.PDFReportGenerator;
+import com.saison.reportgenerator.service.impl.*;
 import freemarker.template.TemplateException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -49,16 +45,22 @@ public class GeneratorController {
 
 
 
-    @PostMapping("/getCSV")
-    public String getCSV(@RequestBody Object json) throws TemplateException, IOException {
+    @PostMapping("/getCSVOld")
+    public String getCSVOld(@RequestBody String json) throws TemplateException, IOException {
         generator = new CSVReportGenerator();
         return (String) generator.getReport(json);
     }
 
     @PostMapping("/getJsonFromCsv")
     public String getJsonFromCsv(@RequestBody String csv) throws TemplateException, IOException {
-        generator = new CsvToJsonReportGenerator();
+        generator = new CsvToJavaPojo();
         return (String) generator.getReport(csv);
+    }
+
+    @PostMapping("/getCSV")
+    public String getCSV(@RequestBody String json) throws TemplateException, IOException {
+        generator = new CSVReportUsingJackson();
+        return (String) generator.getReport(json);
     }
 
     /*@PostMapping("/getUserCharts")

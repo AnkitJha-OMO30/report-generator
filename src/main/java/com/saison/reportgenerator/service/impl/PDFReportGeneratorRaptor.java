@@ -4,7 +4,7 @@ import com.docraptor.ApiClient;
 import com.docraptor.ApiException;
 import com.docraptor.Doc;
 import com.docraptor.DocApi;
-import com.saison.reportgenerator.ReportGeneratorConfiguration;
+import com.saison.reportgenerator.util.ReportGeneratorConfiguration;
 import com.saison.reportgenerator.service.Generator;
 import freemarker.template.Configuration;
 import freemarker.template.Template;

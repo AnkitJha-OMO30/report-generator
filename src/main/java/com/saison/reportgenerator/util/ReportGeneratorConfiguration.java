@@ -1,4 +1,4 @@
-package com.saison.reportgenerator;
+package com.saison.reportgenerator.util;
 
 import freemarker.template.Configuration;
 import freemarker.template.TemplateExceptionHandler;

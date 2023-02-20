@@ -1,6 +1,6 @@
 package com.saison.reportgenerator.service.impl;
 
-import com.saison.reportgenerator.ReportGeneratorConfiguration;
+import com.saison.reportgenerator.util.ReportGeneratorConfiguration;
 import com.saison.reportgenerator.service.Generator;
 import freemarker.template.Configuration;
 import freemarker.template.Template;

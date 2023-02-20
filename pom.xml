@@ -89,6 +89,32 @@
 			<version>2.11.0</version>
 		</dependency>
 
+		<!-- Jackson Dependencies -->
+		<dependency>
+			<groupId>com.fasterxml.jackson.core</groupId>
+			<artifactId>jackson-databind</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+		<dependency>
+			<groupId>com.fasterxml.jackson.dataformat</groupId>
+			<artifactId>jackson-dataformat-csv</artifactId>
+			<version>2.14.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+			<version>1.5.3.Final</version>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<version>1.5.3.Final</version>
+		</dependency>
+
+
+
+
 		<!--<dependency>
 			<groupId>com.github.opendevl</groupId>
 			<artifactId>json2flat</artifactId>
@@ -112,11 +138,12 @@
 			<artifactId>openhtmltopdf-objects</artifactId>
 			<version>1.0.10</version>
 		</dependency>
+		<!--
 		<dependency>
 			<groupId>org.jfree</groupId>
 			<artifactId>jfreechart</artifactId>
 			<version>1.5.0</version>
-		</dependency>
+		</dependency>-->
 	</dependencies>
 
 	<build>
