@@ -84,59 +84,57 @@ JSON
 ```
 [
     {
-        "field31":"val31",
-        "field32":{
-            "field321":"val321",
-            "field322":"val322",
-            "field323":[
+        "field1": "val1",
+        "field2": {
+            "field21": "val21",
+            "field22": "val22",
+            "field23": [
                 {
-                    "field3231":"val3231"
+                    "field231": "val3231[0]"
                 }
             ]
         },
-        "field33":[
+        "field3": [
             {
-                "field331":"val331",
-                "field332":"val332"
+                "field31": "val31[0]",
+                "field32": "val32[0]"
             },
             {
-                "field331":"val331",
-                "field332":"val332"
+                "field31": "val331[1]",
+                "field32": "val332[1]"
             }
         ]
     },
     {
-        "field31":"uniqueVal31",
-        "field32":{
-            "field321":"val321",
-            "field322":"val322",
-            "field323":[
+        "field1": "val22",
+        "field2": {
+            "field21": "val21",
+            "field22": "val22",
+            "field23": [
                 {
-                    "field3231":"val3231"
+                    "field231": "val3231[0]"
                 }
             ]
         },
-        "field33":[
+        "field3": [
             {
-                "field331":"val331",
-                "field332":"val332"
+                "field31": "val31[0]",
+                "field32": "val32[0]"
             },
             {
-                "field331":"val331",
-                "field332":"val332"
+                "field31": "val331[1]",
+                "field32": "val332[1]"
             }
-        ],
-        "field34":"val34"
+        ]
     }
 ]
-
 ```
 
 CSV Generated
 ```
-field33[0].field331,field32.field321,field34,field33[1].field332,field31,field32.field322,field33[1].field331,field32.field323[0].field3231,field33[0].field332
-2val331,val321,,val332,val31,val322,val331,val3231,val332
-3val331,val321,val34,val332,uniqueVal31,val322,val331,val3231,val332
+field1,field2.field21,field2.field22,"field2.field23[0].field231",field3[0].field31,field3[0].field32,field3[1].field31,field3[1].field32
+val1,val21,val22,val3231[0],val31[0],val32[0],val331[1],val332[1]
+val22,val21,val22,val3231[0],val31[0],val32[0],val331[1],val332[1]
 ```
 
 ### CSV to JSON 
@@ -149,7 +147,7 @@ To utilise the API, call the below API
 /getJsonFromCsv
 ```
 
-
+This API converts CSV to JSON, JSON to Java POJO. For more info, check out the CsvToJsonReportGenerator.java
 
 
 Above APIs are still in development, so any feedback is welcome!!
